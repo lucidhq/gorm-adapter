@@ -8,7 +8,7 @@ require (
 	github.com/Kount/pq-timeouts v1.0.0
 	github.com/casbin/casbin/v2 v2.2.2
 	github.com/go-sql-driver/mysql v1.4.1
-	github.com/jinzhu/gorm v1.9.11
+	github.com/jinzhu/gorm v1.9.12
 	github.com/lib/pq v1.1.1
 	github.com/stretchr/testify v1.3.0
 )
