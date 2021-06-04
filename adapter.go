@@ -144,6 +144,14 @@ func (a *Adapter) createDatabase() error {
 	}
 
 	if a.driverName == "postgres" || a.driverName == "pq-timeouts" {
+		//COR-916: If database already exists, just exit. Users without permissions to create database
+		//will fail on CREATE DATABASE call further on down.
+		casbindb := db.Exec("SELECT 1 FROM pg_database WHERE datname = 'casbin'")
+		if casbindb.Error == nil && casbindb.RowsAffected == 1 {
+			db.Close()
+			return nil
+		}
+
 		if err = db.Exec("CREATE DATABASE casbin").Error; err != nil {
 			// 42P04 is	duplicate_database
 			if err.(*pq.Error).Code == "42P04" {
