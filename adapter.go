@@ -144,6 +144,11 @@ func (a *Adapter) createDatabase() error {
 	}
 
 	if a.driverName == "postgres" || a.driverName == "pq-timeouts" {
+		test := db.Exec("SELECT 1 FROM pg_database WHERE datname = 'casbin'")
+		if test.Error != nil {
+
+		}
+
 		if err = db.Exec("CREATE DATABASE casbin").Error; err != nil {
 			// 42P04 is	duplicate_database
 			if err.(*pq.Error).Code == "42P04" {
